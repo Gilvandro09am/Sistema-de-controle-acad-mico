@@ -5,3 +5,5 @@ class Professor {
     this.email = email;
   }
 }
+
+module.exports = Professor; 

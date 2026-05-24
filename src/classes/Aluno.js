@@ -1,8 +1,9 @@
 class Aluno {
-  constructor(nome, matricula, turma, idade) {
+  constructor(nome, matricula, idade) {
     this.nome = nome;
     this.matricula = matricula;
-    this.turma = turma;
     this.idade = idade;
   }
 }
+
+module.exports = Aluno;

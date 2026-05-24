@@ -4,4 +4,10 @@ class Turma {
     this.anoLetivo = anoLetivo;
     this.alunos = [];
   }
+
+  adicionarAluno(aluno) {
+    this.alunos.push(aluno);
+  }
 }
+
+module.exports = Turma;

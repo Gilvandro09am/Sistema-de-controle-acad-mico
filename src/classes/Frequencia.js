@@ -4,3 +4,5 @@ class Frequencia {
     this.faltas = faltas;
   }
 }
+
+module.exports = Frequencia;

@@ -4,3 +4,5 @@ class Avaliacao {
     this.nota = nota;
   }
 }
+
+module.exports = Avaliacao;
