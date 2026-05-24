@@ -1,0 +1,12 @@
+{
+  "name": "pojetoprogamacaoweb",
+  "version": "1.0.0",
+  "description": "O sistema tem como finalidade melhorar o acompanhamento das turmas escolares, permitindo um melhor controle de notas, frequência e desempenho dos alunos.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
