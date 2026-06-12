@@ -1,43 +1,96 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
+
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
+  const [mostrarSenha, setMostrarSenha] = useState(false);
+
+  const navigate = useNavigate();
 
   const handleLogin = () => {
-    if (!email || !senha) {
-      alert("Preencha todos os campos!");
-      return;
+
+    if (
+      email === "gilvandro.martins@aluno.uepb.edu.br" &&
+      senha === "12345678"
+    ) {
+
+      localStorage.setItem("logado", "true");
+
+      navigate("/dashboard");
+
+    } else {
+
+      alert("Email ou senha inválidos");
+
     }
 
-    alert("Login realizado com sucesso!");
   };
 
   return (
-    <div className="login-container">
+    <div className="login-page">
 
       <div className="login-card">
 
-        <h1>🎓 Sistema Acadêmico</h1>
+        <div className="text-center mb-4">
 
-        <p>Controle de alunos, turmas e avaliações</p>
+          <div className="logo-circle">
+            🎓
+          </div>
 
-        <input
-          type="email"
-          placeholder="Digite seu e-mail"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
+          <h2 className="fw-bold">
+            Sistema Acadêmico
+          </h2>
 
-        <input
-          type="password"
-          placeholder="Digite sua senha"
-          value={senha}
-          onChange={(e) => setSenha(e.target.value)}
-        />
+          <p className="text-muted">
+            Plataforma de Gestão Escolar
+          </p>
 
-        <button onClick={handleLogin}>
+        </div>
+
+        <div className="mb-3">
+
+          <input
+            type="email"
+            className="form-control"
+            placeholder="Digite seu email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+
+        </div>
+
+        <div className="input-group mb-3">
+
+          <input
+            type={mostrarSenha ? "text" : "password"}
+            className="form-control"
+            placeholder="Digite sua senha"
+            value={senha}
+            onChange={(e) => setSenha(e.target.value)}
+          />
+
+          <button
+            className="btn btn-outline-secondary"
+            onClick={() =>
+              setMostrarSenha(!mostrarSenha)
+            }
+          >
+            {mostrarSenha ? "🙈" : "👁️"}
+          </button>
+
+        </div>
+
+        <button
+          className="btn btn-primary w-100 mb-2"
+          onClick={handleLogin}
+        >
           Entrar
+        </button>
+
+        <button className="btn btn-outline-primary w-100">
+          Criar Conta
         </button>
 
       </div>

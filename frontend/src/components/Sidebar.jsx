@@ -32,6 +32,18 @@ function Sidebar() {
           </Link>
         </li>
 
+        <li>
+          <Link to="/avaliacoes">
+            📝 Avaliações
+          </Link>
+        </li>
+
+        <li>
+          <Link to="/frequencias">
+            📅 Frequências
+          </Link>
+        </li>
+
       </ul>
 
     </aside>
