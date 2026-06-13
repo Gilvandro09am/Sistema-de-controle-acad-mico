@@ -1,7 +1,7 @@
 import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
 
-function Turmas() {
+function Avaliacoes() {
   return (
     <div className="layout">
 
@@ -11,7 +11,7 @@ function Turmas() {
 
         <Header />
 
-        <h1>Turmas</h1>
+        <h1>Avaliações</h1>
 
       </div>
 
@@ -19,4 +19,4 @@ function Turmas() {
   );
 }
 
-export default Turmas;
+export default Avaliacoes; 
