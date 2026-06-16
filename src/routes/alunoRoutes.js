@@ -14,7 +14,9 @@ router.post("/", (req, res) => {
         id: Date.now(),
         nome: req.body.nome,
         matricula: req.body.matricula,
-        idade: req.body.idade
+        idade: req.body.idade,
+        turmaId: req.body.turmaId ? Number(req.body.turmaId) : null,
+        turmaNome: req.body.turmaNome || ""
     };
 
     alunos.push(aluno);

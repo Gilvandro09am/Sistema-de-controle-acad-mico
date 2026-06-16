@@ -13,7 +13,8 @@ router.post("/", (req, res) => {
     const turma = {
         id: Date.now(),
         nome: req.body.nome,
-        anoLetivo: req.body.anoLetivo
+        anoLetivo: req.body.anoLetivo,
+        professores: Array.isArray(req.body.professores) ? req.body.professores : []
     };
 
     turmas.push(turma);
@@ -37,6 +38,7 @@ router.put("/:id", (req, res) => {
 
     turma.nome = req.body.nome;
     turma.anoLetivo = req.body.anoLetivo;
+    turma.professores = Array.isArray(req.body.professores) ? req.body.professores : [];
 
     res.json(turma);
 });

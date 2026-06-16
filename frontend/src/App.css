@@ -1,94 +1,18 @@
 *{
-<<<<<<< HEAD
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-}
-
-body{
-  font-family:Arial, sans-serif;
-  background:#f4f6f9;
-}
-
-.layout{
-  display:flex;
-}
-
-.sidebar{
-  width:250px;
-  min-height:100vh;
-  background:#1e293b;
-  color:white;
-  display:flex;
-  flex-direction:column;
-  gap:20px;
-  padding:20px;
-}
-
-.sidebar a{
-  color:white;
-  text-decoration:none;
-}
-
-.content{
-  flex:1;
-  padding:30px;
-}
-
-.header{
-  background:white;
-  padding:20px;
-  border-radius:10px;
-  margin-bottom:20px;
-}
-
-.cards{
-  display:flex;
-  gap:20px;
-}
-
-.card{
-  background:white;
-  padding:20px;
-  width:220px;
-  border-radius:12px;
-  box-shadow:0 0 10px rgba(0,0,0,.1);
-}
-
-.login{
-  display:flex;
-  flex-direction:column;
-  width:350px;
-  margin:120px auto;
-  gap:15px;
-}
-
-.login input{
-  padding:12px;
-}
-
-.login button{
-  padding:12px;
-  background:#2563eb;
-  color:white;
-  border:none;
-  cursor:pointer;
-=======
     margin:0;
     padding:0;
     box-sizing:border-box;
 }
 
 body{
-    font-family:Arial, Helvetica, sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
     background:#f4f7fc;
 }
 
-/* LOGIN */
+/* ================= LOGIN ================= */
 
 .login-page{
     min-height:100vh;
-
     display:flex;
     justify-content:center;
     align-items:center;
@@ -103,11 +27,8 @@ body{
 
 .login-card{
     width:450px;
-
     background:white;
-
     padding:40px;
-
     border-radius:20px;
 
     box-shadow:0 15px 35px rgba(0,0,0,.2);
@@ -131,23 +52,19 @@ body{
     font-size:40px;
 }
 
-/* DASHBOARD */
+/* ================= LAYOUT ================= */
 
 .layout{
     display:flex;
     min-height:100vh;
 }
 
-/* MENU */
+/* ================= SIDEBAR ================= */
 
 .sidebar{
-
     width:250px;
-
     background:#1e293b;
-
     color:white;
-
     padding:25px;
 }
 
@@ -157,6 +74,7 @@ body{
 
 .sidebar ul{
     list-style:none;
+    padding-left:0;
 }
 
 .sidebar li{
@@ -167,22 +85,24 @@ body{
     color:white;
     text-decoration:none;
     display:block;
-    padding:10px;
+    padding:12px;
     border-radius:8px;
+    transition:0.3s;
 }
 
 .sidebar a:hover{
     background:#334155;
 }
 
-/* CONTEÚDO */
+/* ================= CONTEÚDO ================= */
 
 .content{
     flex:1;
     padding:30px;
+    background:#f4f7fb;
 }
 
-/* HEADER */
+/* ================= HEADER ================= */
 
 .header{
     background:white;
@@ -190,26 +110,22 @@ body{
     border-radius:15px;
     margin-bottom:25px;
 
-    box-shadow:
-    0 2px 10px rgba(0,0,0,.08);
+    box-shadow:0 2px 10px rgba(0,0,0,.08);
 }
 
-/* CARDS */
+/* ================= DASHBOARD ================= */
 
 .cards{
-
     display:grid;
 
     grid-template-columns:
-    repeat(auto-fit,minmax(220px,1fr));
+    repeat(auto-fit, minmax(220px,1fr));
 
     gap:20px;
 }
 
 .card{
-
     background:white;
-
     padding:25px;
 
     border-radius:15px;
@@ -217,12 +133,62 @@ body{
     box-shadow:
     0 3px 12px rgba(0,0,0,.08);
 
-    transition:.3s;
+    transition:0.3s;
 }
 
 .card:hover{
-
     transform:translateY(-5px);
+}
 
->>>>>>> 41b03e7ec4602fce44abe67dfab26174aeb5cf5b
+.card h3{
+    color:#64748b;
+    margin-bottom:10px;
+}
+
+.card h1{
+    color:#0f172a;
+    font-size:2rem;
+}
+
+/* ================= TABELAS ================= */
+
+table{
+    width:100%;
+    background:white;
+    border-radius:12px;
+    overflow:hidden;
+
+    box-shadow:
+    0 2px 10px rgba(0,0,0,.08);
+}
+
+th{
+    background:#2563eb;
+    color:white;
+    padding:15px;
+}
+
+td{
+    padding:15px;
+    border-bottom:1px solid #eee;
+}
+
+tr:hover{
+    background:#f8fafc;
+}
+
+/* ================= FORMULÁRIOS ================= */
+
+input,
+select{
+    width:100%;
+    padding:12px;
+    margin-bottom:10px;
+
+    border:1px solid #ddd;
+    border-radius:8px;
+}
+
+button{
+    cursor:pointer;
 }

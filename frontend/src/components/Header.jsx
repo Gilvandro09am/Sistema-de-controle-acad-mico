@@ -1,19 +1,39 @@
 function Header() {
   return (
-    <header className="header">
-<<<<<<< HEAD
-      <h2>Sistema Acadêmico</h2>
-=======
+    <header className="bg-white shadow-sm rounded p-3 mb-4 d-flex justify-content-between align-items-center">
+      
+      <div>
+        <h3 className="fw-bold mb-0">
+          🎓 Sistema de Controle Acadêmico
+        </h3>
 
-      <h2>
-        Sistema de Controle Acadêmico
-      </h2>
+        <small className="text-muted">
+          Gerencie alunos, professores, turmas e avaliações
+        </small>
+      </div>
 
-      <p>
-        Bem-vindo ao painel do professor
-      </p>
+      <div className="d-flex align-items-center gap-3">
 
->>>>>>> 41b03e7ec4602fce44abe67dfab26174aeb5cf5b
+        <div className="text-end">
+          <div className="fw-bold">
+            Gilvandro Martins
+          </div>
+
+          <small className="text-muted">
+            Administrador
+          </small>
+        </div>
+
+        <img
+          src="https://ui-avatars.com/api/?name=Gilvandro+Martins&background=0D6EFD&color=fff"
+          alt="Usuário"
+          className="rounded-circle"
+          width="50"
+          height="50"
+        />
+
+      </div>
+
     </header>
   );
 }

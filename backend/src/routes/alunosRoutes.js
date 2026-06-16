@@ -22,4 +22,15 @@ router.post("/", (req, res) => {
   res.status(201).json(aluno);
 });
 
+router.delete("/:id", (req, res) => {
+
+  const id = Number(req.params.id);
+
+  alunos = alunos.filter(
+    aluno => aluno.id !== id
+  );
+
+  res.status(204).send();
+});
+
 module.exports = router;
