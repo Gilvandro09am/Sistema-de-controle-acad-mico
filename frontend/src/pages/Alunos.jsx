@@ -28,6 +28,14 @@ function Alunos() {
     setTurmas(dados);
   }
 
+  function getNomeTurma(aluno) {
+    return (
+      aluno.turmaNome ||
+      turmas.find((turma) => String(turma.id) === String(aluno.turmaId))?.nome ||
+      "-"
+    );
+  }
+
   useEffect(() => {
     async function buscarDados() {
       await carregarAlunos();
@@ -148,7 +156,7 @@ function Alunos() {
                   <td>{aluno.nome}</td>
                   <td>{aluno.matricula}</td>
                   <td>{aluno.idade}</td>
-                  <td>{aluno.turmaNome || "-"}</td>
+                  <td>{getNomeTurma(aluno)}</td>
                   <td>
                     <button
                       className="btn btn-danger btn-sm"

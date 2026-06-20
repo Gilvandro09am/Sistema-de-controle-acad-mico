@@ -10,6 +10,11 @@ export const cadastrarTurma = async (turma) => {
   return response.data;
 };
 
+export const atualizarTurma = async (id, turma) => {
+  const response = await API.put(`/turmas/${id}`, turma);
+  return response.data;
+};
+
 export const excluirTurma = async (id) => {
   await API.delete(`/turmas/${id}`);
 };
