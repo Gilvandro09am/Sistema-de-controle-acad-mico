@@ -1,36 +1,83 @@
+
+
+
+
+
+
+
+
+
+
+
+
 const express = require("express");
+const AlunoRepository = require("../repositories/AlunoRepository");
 
 const router = express.Router();
 
-let alunos = [];
-
-router.get("/", (req, res) => {
-  res.json(alunos);
+router.get("/", async (req, res) => {
+  try {
+    const alunos = await AlunoRepository.obterTodos();
+    res.json(alunos);
+  } catch (error) {
+    console.error("Erro ao obter alunos:", error);
+    res.status(500).json({ erro: "Erro ao obter alunos" });
+  }
 });
 
-router.post("/", (req, res) => {
+router.post("/", async (req, res) => {
+  try {
+    const aluno = await AlunoRepository.criar({
+      nome: req.body.nome,
+      matricula: req.body.matricula,
+      idade: req.body.idade,
+      turmaId: req.body.turmaId
+    });
 
-  const aluno = {
-    id: Date.now(),
-    nome: req.body.nome,
-    matricula: req.body.matricula,
-    idade: req.body.idade
-  };
-
-  alunos.push(aluno);
-
-  res.status(201).json(aluno);
+    res.status(201).json(aluno);
+  } catch (error) {
+    console.error("Erro ao criar aluno:", error);
+    res.status(500).json({ erro: "Erro ao criar aluno" });
+  }
 });
 
-router.delete("/:id", (req, res) => {
+router.get("/:id", async (req, res) => {
+  try {
+    const aluno = await AlunoRepository.obterPorId(Number(req.params.id));
+    if (!aluno) {
+      return res.status(404).json({ erro: "Aluno não encontrado" });
+    }
+    res.json(aluno);
+  } catch (error) {
+    console.error("Erro ao obter aluno:", error);
+    res.status(500).json({ erro: "Erro ao obter aluno" });
+  }
+});
 
-  const id = Number(req.params.id);
+router.put("/:id", async (req, res) => {
+  try {
+    const aluno = await AlunoRepository.atualizar(Number(req.params.id), {
+      nome: req.body.nome,
+      matricula: req.body.matricula,
+      idade: req.body.idade,
+      turmaId: req.body.turmaId
+    });
 
-  alunos = alunos.filter(
-    aluno => aluno.id !== id
-  );
+    res.json(aluno);
+  } catch (error) {
+    console.error("Erro ao atualizar aluno:", error);
+    res.status(500).json({ erro: "Erro ao atualizar aluno" });
+  }
+});
 
-  res.status(204).send();
+router.delete("/:id", async (req, res) => {
+  try {
+    await AlunoRepository.deletar(Number(req.params.id));
+    res.status(204).send();
+  } catch (error) {
+    console.error("Erro ao deletar aluno:", error);
+    res.status(500).json({ erro: "Erro ao deletar aluno" });
+  }
 });
 
 module.exports = router;

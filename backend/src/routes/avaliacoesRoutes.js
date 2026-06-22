@@ -9,12 +9,24 @@ router.get("/", (req, res) => {
 });
 
 router.post("/", (req, res) => {
+  const prova = Number(req.body.prova) || 0;
+  const participacao = Number(req.body.participacao) || 0;
+  const trabalho = Number(req.body.trabalho) || 0;
+  const media = Number(((prova + participacao + trabalho) / 3).toFixed(2));
+
   const avaliacao = {
     id: Date.now(),
+    turmaId: req.body.turmaId,
+    turmaNome: req.body.turmaNome,
+    professorId: req.body.professorId,
+    professorNome: req.body.professorNome,
     alunoId: req.body.alunoId,
     alunoNome: req.body.alunoNome,
-    disciplina: req.body.disciplina,
-    nota: req.body.nota,
+    prova,
+    participacao,
+    trabalho,
+    media,
+    data: new Date().toISOString(),
   };
 
   avaliacoes.push(avaliacao);
