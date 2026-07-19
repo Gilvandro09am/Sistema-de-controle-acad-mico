@@ -1,0 +1,326 @@
+#!/usr/bin/env node
+
+/**
+ * GUIA COMPLETO DE TESTE DA INTEGRAÇÃO SQLite
+ * ============================================
+ * 
+ * Este arquivo documenta todos os passos para testar a integração SQLite
+ */
+
+console.log(`
+╔═══════════════════════════════════════════════════════════════╗
+║     INTEGRAÇÃO SQLITE - GUIA COMPLETO DE TESTE             ║
+╚═══════════════════════════════════════════════════════════════╝
+
+📋 RESUMO DO QUE FOI IMPLEMENTADO:
+═══════════════════════════════════════════════════════════════
+
+✅ BANCO DE DADOS SQLITE
+   • Arquivo: backend/escola.db
+   • 5 tabelas principais:
+     - turmas (id, nomeTurma, anoLetivo)
+     - professores (id, nome, email, disciplina)
+     - alunos (id, nome, matricula, idade, turmaId)
+     - avaliacoes (id, alunoId, professorId, disciplina, nota, data)
+     - frequencias (id, alunoId, turmaId, totalAulas, presentes, mes, ano)
+
+✅ PADRÃO REPOSITORY
+   • 5 repositórios (um para cada entidade)
+   • Métodos CRUD completos
+   • Promisificação de callbacks
+
+✅ ROTAS REST ATUALIZADAS
+   • Integradas com SQLite
+   • Endpoints com métodos async/await
+   • Tratamento de erros centralizado
+
+✅ INICIALIZAÇÃO AUTOMÁTICA
+   • Tabelas criadas automaticamente na inicialização
+   • Chaves estrangeiras configuradas
+
+═══════════════════════════════════════════════════════════════
+🚀 PASSO 1: VALIDAÇÃO RÁPIDA
+═══════════════════════════════════════════════════════════════
+
+Execute:
+  npm run validate
+
+Este comando verifica:
+  ✓ Existência de todos os arquivos necessários
+  ✓ Configuração de sqlite3 no package.json
+  ✓ Inicialização do banco de dados no app.js
+
+═══════════════════════════════════════════════════════════════
+🧪 PASSO 2: TESTE AUTOMÁTICO COMPLETO
+═══════════════════════════════════════════════════════════════
+
+Execute:
+  npm run test
+
+Este teste valida:
+  ✓ Inicialização do banco de dados
+  ✓ CRUD de Turmas (Create, Read, Update, Delete)
+  ✓ CRUD de Professores
+  ✓ CRUD de Alunos
+  ✓ CRUD de Avaliações
+  ✓ CRUD de Frequências
+  ✓ Cálculos (média, percentual)
+  ✓ Relacionamentos entre tabelas
+
+Resultado esperado: ✓ Todos os testes passaram!
+
+═══════════════════════════════════════════════════════════════
+▶️  PASSO 3: INICIAR O SERVIDOR
+═══════════════════════════════════════════════════════════════
+
+Modo Produção:
+  npm start
+
+Modo Desenvolvimento (com auto-reload):
+  npm run dev
+
+Esperado na saída:
+  ✓ "Conectado ao banco de dados SQLite: ..."
+  ✓ "Tabelas criadas/verificadas com sucesso"
+  ✓ "Servidor rodando em http://localhost:3000"
+
+═══════════════════════════════════════════════════════════════
+🌐 PASSO 4: TESTAR ENDPOINTS COM CURL
+═══════════════════════════════════════════════════════════════
+
+1️⃣  CRIAR TURMA
+─────────────────────────────────────────────────────────────
+curl -X POST http://localhost:3000/turmas \\
+  -H "Content-Type: application/json" \\
+  -d '{
+    "nomeTurma": "1º Ano A",
+    "anoLetivo": 2024
+  }'
+
+Resposta esperada:
+{
+  "id": 1,
+  "nomeTurma": "1º Ano A",
+  "anoLetivo": 2024,
+  "dataCriacao": "2024-06-22 10:30:00"
+}
+
+2️⃣  CRIAR PROFESSOR
+─────────────────────────────────────────────────────────────
+curl -X POST http://localhost:3000/professores \\
+  -H "Content-Type: application/json" \\
+  -d '{
+    "nome": "João Silva",
+    "email": "joao@escola.com",
+    "disciplina": "Matemática"
+  }'
+
+3️⃣  CRIAR ALUNO
+─────────────────────────────────────────────────────────────
+curl -X POST http://localhost:3000/alunos \\
+  -H "Content-Type: application/json" \\
+  -d '{
+    "nome": "Maria Santos",
+    "matricula": "MAT001",
+    "idade": 15,
+    "turmaId": 1
+  }'
+
+4️⃣  CRIAR AVALIAÇÃO
+─────────────────────────────────────────────────────────────
+curl -X POST http://localhost:3000/avaliacoes \\
+  -H "Content-Type: application/json" \\
+  -d '{
+    "alunoId": 1,
+    "professorId": 1,
+    "disciplina": "Matemática",
+    "nota": 8.5,
+    "data": "2024-06-20"
+  }'
+
+5️⃣  CRIAR FREQUÊNCIA
+─────────────────────────────────────────────────────────────
+curl -X POST http://localhost:3000/frequencias \\
+  -H "Content-Type: application/json" \\
+  -d '{
+    "alunoId": 1,
+    "turmaId": 1,
+    "totalAulas": 20,
+    "presentes": 18,
+    "mes": 6,
+    "ano": 2024
+  }'
+
+6️⃣  OBTER TODOS OS ALUNOS
+─────────────────────────────────────────────────────────────
+curl http://localhost:3000/alunos
+
+7️⃣  OBTER TURMA COM SEUS ALUNOS
+─────────────────────────────────────────────────────────────
+curl http://localhost:3000/turmas/1/alunos
+
+8️⃣  OBTER MÉDIA DE UM ALUNO
+─────────────────────────────────────────────────────────────
+curl http://localhost:3000/avaliacoes/aluno/1
+
+9️⃣  OBTER FREQUÊNCIA DE UM ALUNO
+─────────────────────────────────────────────────────────────
+curl http://localhost:3000/frequencias/aluno/1
+
+═══════════════════════════════════════════════════════════════
+🖥️  PASSO 5: TESTAR COM POSTMAN
+═══════════════════════════════════════════════════════════════
+
+1. Baixe Postman: https://www.postman.com/downloads/
+2. Importe os endpoints listados no PASSO 4
+3. Execute os testes em sequência
+4. Verifique os responses
+
+═══════════════════════════════════════════════════════════════
+🗄️  PASSO 6: VISUALIZAR BANCO DE DADOS
+═══════════════════════════════════════════════════════════════
+
+OPÇÃO A: SQLite Browser (GUI)
+─────────────────────────────────────────────────────────────
+1. Baixe: https://sqlitebrowser.org/
+2. Abra: backend/escola.db
+3. Explore as tabelas
+
+OPÇÃO B: Terminal (CLI)
+─────────────────────────────────────────────────────────────
+$ sqlite3 backend/escola.db
+
+.tables                    # Listar todas as tabelas
+.schema turmas             # Ver estrutura da tabela
+SELECT * FROM alunos;      # Ver todos os alunos
+SELECT * FROM turmas;      # Ver todas as turmas
+SELECT COUNT(*) FROM avaliacoes;  # Contar avaliações
+.quit                      # Sair
+
+═══════════════════════════════════════════════════════════════
+📝 PASSO 7: INTEGRANDO COM FRONTEND
+═══════════════════════════════════════════════════════════════
+
+No frontend (React), atualize os serviços para usar os novos endpoints:
+
+// frontend/src/services/alunoService.js
+export const alunoService = {
+  getAll: async () => {
+    const response = await api.get('/alunos');
+    return response.data;
+  },
+  
+  create: async (aluno) => {
+    const response = await api.post('/alunos', aluno);
+    return response.data;
+  },
+  
+  update: async (id, aluno) => {
+    const response = await api.put(\`/alunos/\${id}\`, aluno);
+    return response.data;
+  },
+  
+  delete: async (id) => {
+    await api.delete(\`/alunos/\${id}\`);
+  }
+};
+
+// Mesma estrutura para TurmaService, ProfessorService, etc.
+
+═══════════════════════════════════════════════════════════════
+✅ CHECKLIST DE VALIDAÇÃO
+═══════════════════════════════════════════════════════════════
+
+Backend:
+  [ ] npm install executado
+  [ ] npm run validate retorna 100% de sucesso
+  [ ] npm run test retorna todos os testes passando
+  [ ] npm start não mostra erros
+  [ ] Arquivo backend/escola.db foi criado
+  [ ] SQLite3 está instalado (npm list sqlite3)
+
+Endpoints:
+  [ ] POST /turmas funciona
+  [ ] POST /professores funciona
+  [ ] POST /alunos funciona
+  [ ] POST /avaliacoes funciona
+  [ ] POST /frequencias funciona
+  [ ] GET /alunos retorna dados
+  [ ] GET /turmas/:id/alunos funciona
+  [ ] Dados persistem após reiniciar servidor
+
+Banco de Dados:
+  [ ] Arquivo escola.db existe
+  [ ] Tabelas estão criadas
+  [ ] Relacionamentos funcionam
+  [ ] Chaves estrangeiras ativas
+
+═══════════════════════════════════════════════════════════════
+🐛 TROUBLESHOOTING
+═══════════════════════════════════════════════════════════════
+
+❌ Erro: Cannot find module 'sqlite3'
+   ✓ Solução: npm install sqlite3
+
+❌ Erro: SQLITE_CANTOPEN
+   ✓ Solução: Verifique permissões da pasta backend/
+
+❌ Erro: Tabelas não existem
+   ✓ Solução: Remova backend/escola.db e reinicie
+
+❌ Endpoints retornam 404
+   ✓ Solução: Verifique se o servidor está rodando
+
+❌ Dados não persistem
+   ✓ Solução: Verifique caminho do arquivo db.js
+
+═══════════════════════════════════════════════════════════════
+📚 ESTRUTURA DO PROJETO
+═══════════════════════════════════════════════════════════════
+
+PojetoProgamacaoWeb/
+├── backend/
+│   ├── src/
+│   │   ├── database/
+│   │   │   ├── db.js                 [NOVO]
+│   │   │   └── init.js               [NOVO]
+│   │   ├── repositories/
+│   │   │   ├── AlunoRepository.js     [NOVO]
+│   │   │   ├── TurmaRepository.js     [NOVO]
+│   │   │   ├── ProfessorRepository.js [NOVO]
+│   │   │   ├── AvaliacaoRepository.js [NOVO]
+│   │   │   └── FrequenciaRepository.js [NOVO]
+│   │   ├── routes/
+│   │   │   ├── alunosRoutes.js        [ATUALIZADO]
+│   │   │   ├── professoresRoutes.js   [ATUALIZADO]
+│   │   │   ├── turmasRoutes.js        [ATUALIZADO]
+│   │   │   ├── avaliacoesRoutes.js    [ATUALIZADO]
+│   │   │   └── frequenciasRoutes.js   [ATUALIZADO]
+│   │   └── app.js                     [ATUALIZADO]
+│   ├── test.js                        [NOVO]
+│   ├── validate.js                    [NOVO]
+│   ├── escola.db                      [AUTO-CRIADO]
+│   ├── package.json                   [ATUALIZADO]
+│   └── server.js
+└── frontend/
+    └── ... (sem mudanças)
+
+═══════════════════════════════════════════════════════════════
+🎉 CONCLUSÃO
+═══════════════════════════════════════════════════════════════
+
+A integração SQLite foi completada com sucesso!
+
+Todos os dados agora são persistentes e o projeto segue
+boas práticas de programação com o padrão Repository.
+
+Para confirmar que tudo está funcionando:
+
+  1. npm install
+  2. npm run validate
+  3. npm run test
+  4. npm start
+  5. Testar endpoints com curl/Postman
+
+═══════════════════════════════════════════════════════════════
+`);

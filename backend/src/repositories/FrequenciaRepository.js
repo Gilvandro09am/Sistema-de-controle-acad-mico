@@ -2,11 +2,26 @@ const { promiseDb } = require('../database/db');
 
 class FrequenciaRepository {
   static async criar(dados) {
-    const { alunoId, turmaId, totalAulas, presentes, mes, ano } = dados;
+    const {
+      alunoId,
+      turmaId,
+      turmaNome,
+      professorNome,
+      alunoNome,
+      totalAulas,
+      presentes,
+      faltas,
+      percentual,
+      mes,
+      ano,
+      data,
+    } = dados;
+
     const result = await promiseDb.run(
-      'INSERT INTO frequencias (alunoId, turmaId, totalAulas, presentes, mes, ano) VALUES (?, ?, ?, ?, ?, ?)',
-      [alunoId, turmaId, totalAulas, presentes, mes, ano]
+      'INSERT INTO frequencias (alunoId, turmaId, turmaNome, professorNome, alunoNome, totalAulas, presentes, faltas, percentual, mes, ano, data) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+      [alunoId, turmaId, turmaNome || null, professorNome || null, alunoNome || null, totalAulas || 0, presentes || 0, faltas || 0, percentual || 0, mes || null, ano || null, data || new Date().toISOString()]
     );
+
     return { id: result.id, ...dados };
   }
 
@@ -33,11 +48,26 @@ class FrequenciaRepository {
   }
 
   static async atualizar(id, dados) {
-    const { alunoId, turmaId, totalAulas, presentes, mes, ano } = dados;
+    const {
+      alunoId,
+      turmaId,
+      turmaNome,
+      professorNome,
+      alunoNome,
+      totalAulas,
+      presentes,
+      faltas,
+      percentual,
+      mes,
+      ano,
+      data,
+    } = dados;
+
     await promiseDb.run(
-      'UPDATE frequencias SET alunoId = ?, turmaId = ?, totalAulas = ?, presentes = ?, mes = ?, ano = ? WHERE id = ?',
-      [alunoId, turmaId, totalAulas, presentes, mes, ano, id]
+      'UPDATE frequencias SET alunoId = ?, turmaId = ?, turmaNome = ?, professorNome = ?, alunoNome = ?, totalAulas = ?, presentes = ?, faltas = ?, percentual = ?, mes = ?, ano = ?, data = ? WHERE id = ?',
+      [alunoId, turmaId, turmaNome || null, professorNome || null, alunoNome || null, totalAulas || 0, presentes || 0, faltas || 0, percentual || 0, mes || null, ano || null, data || new Date().toISOString(), id]
     );
+
     return { id, ...dados };
   }
 
@@ -51,7 +81,7 @@ class FrequenciaRepository {
       'SELECT SUM(presentes) as totalPresentes, SUM(totalAulas) as totalAulas FROM frequencias WHERE alunoId = ?',
       [alunoId]
     );
-    
+
     if (!result || result.totalAulas === 0) return 0;
     return Math.round((result.totalPresentes / result.totalAulas) * 100);
   }

@@ -10,6 +10,8 @@
     "test:interactive": "node teste-interativo.js"
   },
   "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^5.2.1",
     "sqlite3": "^6.0.1"
   }
 }

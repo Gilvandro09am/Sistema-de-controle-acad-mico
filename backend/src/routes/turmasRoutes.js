@@ -1,51 +1,64 @@
 const express = require("express");
+const TurmaRepository = require("../repositories/TurmaRepository");
 
 const router = express.Router();
 
-let turmas = [];
-
-router.get("/", (req, res) => {
-  res.json(turmas);
+router.get("/", async (req, res) => {
+  try {
+    const turmas = await TurmaRepository.obterTodos();
+    res.json(turmas);
+  } catch (error) {
+    console.error("Erro ao obter turmas:", error);
+    res.status(500).json({ erro: "Erro ao obter turmas" });
+  }
 });
 
-router.post("/", (req, res) => {
-  const turma = {
-    id: Date.now(),
-    nome: req.body.nome,
-    anoLetivo: req.body.anoLetivo,
-    professores: req.body.professores || [],
-    alunos: req.body.alunos || [],
-  };
+router.post("/", async (req, res) => {
+  try {
+    const turma = await TurmaRepository.criar({
+      nome: req.body.nome,
+      nomeTurma: req.body.nomeTurma,
+      anoLetivo: req.body.anoLetivo,
+      professores: req.body.professores || [],
+      alunos: req.body.alunos || [],
+    });
 
-  turmas.push(turma);
-
-  res.status(201).json(turma);
+    res.status(201).json(turma);
+  } catch (error) {
+    console.error("Erro ao criar turma:", error);
+    res.status(500).json({ erro: "Erro ao criar turma" });
+  }
 });
 
-router.put("/:id", (req, res) => {
-  const id = Number(req.params.id);
-  const turma = turmas.find((turma) => turma.id === id);
+router.put("/:id", async (req, res) => {
+  try {
+    const turma = await TurmaRepository.atualizar(Number(req.params.id), {
+      nome: req.body.nome,
+      nomeTurma: req.body.nomeTurma,
+      anoLetivo: req.body.anoLetivo,
+      professores: req.body.professores || [],
+      alunos: req.body.alunos || [],
+    });
 
-  if (!turma) {
-    return res.status(404).json({ mensagem: "Turma não encontrada" });
-  }
+    if (!turma) {
+      return res.status(404).json({ mensagem: "Turma não encontrada" });
+    }
 
-  turma.nome = req.body.nome ?? turma.nome;
-  turma.anoLetivo = req.body.anoLetivo ?? turma.anoLetivo;
-  if (Array.isArray(req.body.professores)) {
-    turma.professores = req.body.professores;
+    res.json(turma);
+  } catch (error) {
+    console.error("Erro ao atualizar turma:", error);
+    res.status(500).json({ erro: "Erro ao atualizar turma" });
   }
-  if (Array.isArray(req.body.alunos)) {
-    turma.alunos = req.body.alunos;
-  }
-
-  res.json(turma);
 });
 
-router.delete("/:id", (req, res) => {
-  const id = Number(req.params.id);
-  turmas = turmas.filter((turma) => turma.id !== id);
-  res.status(204).send();
+router.delete("/:id", async (req, res) => {
+  try {
+    await TurmaRepository.deletar(Number(req.params.id));
+    res.status(204).send();
+  } catch (error) {
+    console.error("Erro ao deletar turma:", error);
+    res.status(500).json({ erro: "Erro ao deletar turma" });
+  }
 });
 
 module.exports = router;
